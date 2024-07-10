@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'prointimopersonas/styles/consultar_empleado.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <title>Consultar Empleado</title>
+
+    <script>
+        function goToPaginaprincipal() {
+            window.location.href = "{% url 'paginaprincipal' %}";
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h2>PROINTIMO PERSONAS</h2>
+        <div class="user-info">
+            <span class="user">{{ user.username }}</span>
+        </div>
+    </div>
+    <div class="search-bar">
+        <form method="post">
+            {% csrf_token %}
+            <label for="codigo_empleado">Código de Empleado:</label>
+            <input type="text" name="codigo_empleado" id="codigo_empleado" value="{{ request.POST.codigo_empleado }}">
+            <label for="cedula">Número de Cédula:</label>
+            <input type="text" name="cedula" id="cedula" value="{{ request.POST.cedula }}">
+            <button type="submit">Buscar</button>
+            <button type="button" onclick="goToPaginaprincipal()">Volver</button>
+        </form>
+    </div>
+
+    <!-- Mostrar mensajes -->
+    {% if no_registro %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            toastr.error('El Usuario ingresado no existe.');
+        });
+    </script>
+    {% endif %}
+
+    {% if empleado %}
+    <div class="main-container">
+        <div class="section">
+            <h3>Información Personal</h3>
+            <table>
+                <tr class="{% if empleado.estado == 'Activo' %}activo{% elif empleado.estado == 'Inactivo' %}inactivo{% endif %}">
+                    <td class="label">Estado</td>
+                    <td class="value">{{ empleado.estado }}</td>
+                </tr>
+                <tr><td class="label">Nombre</td><td class="value">{{ empleado.nombre }}</td></tr>
+                <tr><td class="label">Apellido</td><td class="value">{{ empleado.apellido }}</td></tr>
+                <tr><td class="label">Cedula</td><td class="value">{{ empleado.cedula }}</td></tr>
+                <tr><td class="label">Género</td><td class="value">{{ empleado.genero }}</td></tr>
+                <tr><td class="label">Tipo de Sangre</td><td class="value">{{ empleado.tipo_de_sangre }}</td></tr>
+                <tr><td class="label">Fecha de Nacimiento</td><td class="value">{{ empleado.fecha_de_nacimiento }}</td></tr>
+                <tr><td class="label">Lugar de Nacimiento</td><td class="value">{{ empleado.lugar_de_nacimiento }}</td></tr>
+                <tr><td class="label">Estatura</td><td class="value">{{ empleado.estatura }}</td></tr>
+                <tr><td class="label">Talla de Camisa</td><td class="value">{{ empleado.talla_camisa }}</td></tr>
+                <tr><td class="label">Talla de Sudadera</td><td class="value">{{ empleado.talla_sudadera }}</td></tr>
+                <tr><td class="label">Talla de Calzado</td><td class="value">{{ empleado.talla_calzado }}</td></tr>
+                <tr><td class="label">Estado Civil</td><td class="value">{{ empleado.estado_civil }}</td></tr>
+                <tr><td class="label">Tipo de Vivienda</td><td class="value">{{ empleado.tipo_de_vivienda }}</td></tr>
+                <tr><td class="label">Posee Vehiculo</td><td class="value">{{ empleado.vehiculo }}</td></tr>
+                <tr><td class="label">Dirección</td><td class="value">{{ empleado.direccion }}</td></tr>
+                <tr><td class="label">Contacto</td><td class="value">{{ empleado.contacto }}</td></tr>
+                <tr><td class="label">Contacto de Emergencia</td><td class="value">{{ empleado.contacto_de_emergencia }}</td></tr>
+                <tr><td class="label">Correo Electronico</td><td class="value">{{ empleado.correo_electronico }}</td></tr>
+                <tr><td class="label">EPS</td><td class="value">{{ empleado.eps }}</td></tr>
+                <tr><td class="label">Fondo de Cesantías</td><td class="value">{{ empleado.fondo_de_cesantias }}</td></tr>
+                <tr><td class="label">Fondo de Pensión</td><td class="value">{{ empleado.administrador_fondo_de_pensiones }}</td></tr>
+            </table>
+        </div>
+
+        <div class="section empresarial">
+            <h3>Información Empresarial</h3>
+            <table>
+                <tr><td class="label">Aseguradora de Riesgos</td><td class="value">{{ empleado.arl }}</td></tr>
+                <tr><td class="label">Riesgo Arl</td><td class="value">{{ empleado.riesgo_arl }}</td></tr>
+                <tr><td class="label">Tipo de Contrato</td><td class="value">{{ empleado.tipo_de_contrato }}</td></tr>
+                <tr><td class="label">Área</td><td class="value">{{ empleado.get_area_display }}</td></tr>
+                <tr><td class="label">Cargo</td><td class="value">{{ empleado.get_cargo_display }}</td></tr>
+                <tr><td class="label">Centro de Costos</td><td class="value">{{ empleado.get_centro_de_costos_display }}</td></tr>
+                <tr><td class="label">Nivel</td><td class="value">{{ empleado.get_nivel_display }}</td></tr>
+                <tr><td class="label">Fecha de Ingreso</td><td class="value">{{ empleado.fecha_de_ingreso }}</td></tr>
+            </table>
+        </div>
+
+        {% if hijos %}
+        <div class="section hijo">
+            <h3>Informacion de Hijos</h3>
+            <table>
+                <tr>
+                    <td class="label">Genero</td>
+                    <td class="label">Fecha de Nacimiento</td>
+                    <td class="label">Nombre</td>
+                    <td class="label">Apellido</td>
+                    <td class="label">Edad</td>
+                </tr>
+                {% for hijo in hijos %}
+                <tr>
+                    <td class="value">{{ hijo.genero }}</td>
+                    <td class="value">{{ hijo.fecha_de_nacimiento }}</td>
+                    <td class="value">{{ hijo.nombre }}</td>
+                    <td class="value">{{ hijo.apellido }}</td>
+                    <td class="value">{{ hijo.edad }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>  
+        {% endif %}  
+
+        <div class="section estudios">
+            <h3>Estudios Realizados</h3>
+            <table>
+                <tr>
+                    <td class="label">Nivel</td>
+                    <td class="label">Area de Estudio</td>
+                    <td class="label">Institucion</td>
+                </tr>
+                {% for estudio in estudios %}
+                <tr>
+                    <td class="value">{{ estudio.Nivel }}</td>
+                    <td class="value">{{ estudio.Area }}</td>
+                    <td class="value">{{ estudio.Institucion }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div> 
+
+        {% if empleado.estado == 'Inactivo' %}
+        <div class="section retiro">
+            <h3>Información de Retiro</h3>
+            <table>
+                <tr>
+                    <td class="label">Fecha de Retiro</td>
+                    <td class="value">{{ empleado.fecha_de_retiro }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Motivo de Retiro</td>
+                    <td class="value">{{ empleado.motivo_de_retiro }}</td>
+                </tr>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</body>
+</html>

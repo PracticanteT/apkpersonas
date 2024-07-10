@@ -1,0 +1,179 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+    background-color: #002c5f;
+    color: white;
+    text-align: center;
+    padding: 10px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header h2 {
+    margin: 0;
+    padding-left: 0px;
+    font-size: 18px;
+}
+.user{
+    background-color: #001731;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.user-info span {
+    margin-right: 15px;
+}
+
+.user-info form {
+    margin: 0;
+}
+.user-info a {
+    color: white;
+    text-decoration: none;
+    background-color: #0056b3;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.search-bar {
+    margin-top: 60px;
+    padding: 15px;
+    background-color: #002c5f;
+    color: white;
+    text-align: center;
+}
+
+.search-bar label, .search-bar input, .search-bar button {
+    margin: 0 5px;
+    padding: 5px;
+}
+
+.search-bar button {
+    background-color: #0056b3;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.section {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 30%;
+    flex: 1 1 300PX;
+}
+
+.section h3 {
+    text-align: center;
+    background-color: #002c5f;
+    color: white;
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+td.label {
+    background-color:azure;
+    color: black;
+    padding: 5px;
+}
+
+td.value {
+    background-color:rgba(114, 111, 114, 0.067);
+    padding: 5px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: white;
+}
+
+
+
+tr.activo td.value {
+    background-color:#288316;
+    color: white;
+}
+
+tr.inactivo td.value {
+    background-color: rgb(206, 5, 5);
+    color: white;
+}
+
+
+
+.section.retiro {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 20%;
+    margin-top: 1px;
+    margin-left: 20px;
+   
+}
+
+.section.hijo {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 20%;
+    margin-top: 1px;
+    margin-left: 20px;
+   
+}
+.section.empresarial {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 30%;
+    margin-top: 1px;
+    margin-left:20px;
+   
+}
+
+.section.estudios {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 20%;
+    margin-top: 1px;
+    margin-left: 20px;
+}

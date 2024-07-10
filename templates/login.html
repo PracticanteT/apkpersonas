@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'prointimopersonas/styles/login.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+</head>
+<body>
+    <div class="header">
+        <h2>PROINTIMO PERSONAS</h2>
+    </div>
+    <div class="container">
+        <h1>Iniciar Sesión</h1>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ingresar Empleado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'prointimopersonas/styles/ingresar_empleado.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{% static 'prointimopersonas/js/script.js' %}"></script>
+    <script>
+        function goToPaginaprincipal() {
+            window.location.href = "{% url 'paginaprincipal' %}";
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h2>PROINTIMO PERSONAS</h2>
+        <div class="user-info">
+            <span class="user">{{ user.username }}</span>
+            <button type="button" onclick="goToPaginaprincipal()" style="background: none; border: none; color: white; cursor: pointer; padding: 0 10px;">
+                <img src="https://img.icons8.com/?size=100&id=IpDjq3VGsBFr&format=png&color=ffffff" alt="Volver" style="width: 28px; height: 28px;">
+            </button>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <h1>Registrar Empleado</h1>
+        <form method="post" enctype="multipart/form-data" id="empleadoForm">
+            {% csrf_token %}
+            {{ form_empleado.as_p }}
+
+            <label for="id_tiene_hijos">Tiene Hijos:</label>
+            <select name="tiene_hijos" id="id_tiene_hijos">
+                <option value="si">Si</option>
+                <option value="no" selected>No</option>
+            </select>
+            <button type="button" id="add_hijo" style="display: none;">Agregar Hijo</button>
+            <div id="hijos_formset" style="display: none;">
+                {{ formset_hijos.management_form }}
+                {% for form in formset_hijos %}
+                    <div class="formset-form">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+                <div class="formset-form empty-form" style="display:none;">
+                    {{ formset_hijos.empty_form.as_p }}
+                </div>
+            </div>
+
+            <label for="id_tiene_estudios">Tiene Estudios Realizados:</label>
+            <select name="tiene_estudios" id="id_tiene_estudios">
+                <option value="si">Si</option>
+                <option value="no" selected>No</option>
+            </select>
+            <button type="button" id="add_estudio" style="display: none;">Agregar Estudio</button>
+            <div id="estudios_formset" style="display: none;">
+                {{ formset_estudios.management_form }}
+                {% for form in formset_estudios %}
+                    <div class="formset-form">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+                <div class="formset-form empty-form" style="display:none;">
+                    {{ formset_estudios.empty_form.as_p }}
+                </div>
+            </div>
+
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#id_tiene_hijos').change(function(){
+                if($(this).val() == 'si'){
+                    $('#hijos_formset').show();
+                    $('#add_hijo').show();
+                } else {
+                    $('#hijos_formset').hide();
+                    $('#add_hijo').hide();
+                }
+            });
+
+            $('#add_hijo').click(function(){
+                var totalForms = $('#id_hijos-TOTAL_FORMS');
+                var currentFormCount = totalForms.val();
+                var newForm = $('#hijos_formset .empty-form').clone(true).removeClass('empty-form').addClass('formset-form');
+                newForm.find(':input').each(function(){
+                    var name = $(this).attr('name').replace('__prefix__', currentFormCount);
+                    var id = 'id_' + name;
+                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+                });
+                totalForms.val(parseInt(currentFormCount) + 1);
+                $('#hijos_formset').append(newForm);
+            });
+
+            $('#id_tiene_estudios').change(function(){
+                if($(this).val() == 'si'){
+                    $('#estudios_formset').show();
+                    $('#add_estudio').show();
+                } else {
+                    $('#estudios_formset').hide();
+                    $('#add_estudio').hide();
+                }
+            });
+
+            $('#add_estudio').click(function(){
+                var totalForms = $('#id_estudios-TOTAL_FORMS');
+                var currentFormCount = totalForms.val();
+                var newForm = $('#estudios_formset .empty-form').clone(true).removeClass('empty-form').addClass('formset-form');
+                newForm.find(':input').each(function(){
+                    var name = $(this).attr('name').replace('__prefix__', currentFormCount);
+                    var id = 'id_' + name;
+                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+                });
+                totalForms.val(parseInt(currentFormCount) + 1);
+                $('#estudios_formset').append(newForm);
+            });
+
+            // Inicializar visibilidad basada en el valor actual del select al cargar la página
+            if ($('#id_tiene_hijos').val() === 'si') {
+                $('#hijos_formset').show();
+                $('#add_hijo').show();
+            } else {
+                $('#hijos_formset').hide();
+                $('#add_hijo').hide();
+            }
+
+            if ($('#id_tiene_estudios').val() === 'si') {
+                $('#estudios_formset').show();
+                $('#add_estudio').show();
+            } else {
+                $('#estudios_formset').hide();
+                $('#add_estudio').hide();
+            }
+
+            $('#empleadoForm').on('submit', function(event){
+                event.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        toastr.success('Empleado creado correctamente.');
+                        setTimeout(function(){
+                            window.location.href = "{% url 'paginaprincipal' %}";
+                        }, 1000);
+                    },
+                    error: function(response) {
+                        toastr.error('Hubo un error al crear el empleado. Por favor, inténtelo de nuevo.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

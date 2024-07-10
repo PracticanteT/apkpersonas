@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'prointimopersonas/styles/pagina_principal.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Página Principal</title>
+
+    <script type="text/javascript">
+        (function (global) {
+            if (typeof (global) === "undefined") {
+                throw new Error("window is undefined");
+            }
+
+            var noBackPlease = function () {
+                global.history.pushState(null, null, global.location.href);
+                global.onpopstate = function () {
+                    global.history.go(1);
+                };
+            };
+
+            global.onload = function () {
+                noBackPlease();
+
+                if (window.history && window.history.pushState) {
+                    window.history.pushState('no-back', null, '');
+                    window.history.pushState(null, null, window.location.href);
+                    window.onpopstate = function () {
+                        window.history.go(1);
+                    };
+                }
+
+                document.body.onkeydown = function (e) {
+                    var elm = e.target.nodeName.toLowerCase();
+                    if ((e.which === 8 && (elm !== 'input' && elm !== 'textarea')) || 
+                        (e.which === 37 || e.which === 39)) {
+                        e.preventDefault();
+                    }
+                    e.stopPropagation();
+                };
+            };
+        })(window);
+    </script>
+    <style>
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>PROINTIMO PERSONAS</h2>
+        <div class="user-info">
+            <span class="user">{{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; padding: 0;">
+                    <img src="https://img.icons8.com/?size=100&id=vGj0AluRnTSa&format=png&color=ffffff" alt="Salir" style="width: 28px; height: 28px;">
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <a href="{% url 'consultar_empleado' %}">
+                <img src="{% static 'prointimopersonas/images/consultar_empleado.jpg' %}" alt="Empleado">
+                <div class="card-text">Consultar Empleado</div>
+            </a>
+        </div>
+        <div class="card">
+            <a href="{% url 'ingresar_empleado' %}">
+                <img src="{% static 'prointimopersonas/images/ingresar_empleado.png' %}" alt="Registrar Empleado">
+                <div class="card-text">Registrar Empleado</div>
+            </a>
+        </div>
+        <div class="card">
+            <a href="{% url 'buscar_empleado_para_actualizar' %}">
+                <img src="{% static 'prointimopersonas/images/actualizar_empleado.png' %}" alt="Eliminar Empleado">
+                <div class="card-text">Actualizar Empleado</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" aria-live="polite" aria-atomic="true">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Mensaje</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.toast').toast('show');
+        });
+    </script>
+</body>
+</html>

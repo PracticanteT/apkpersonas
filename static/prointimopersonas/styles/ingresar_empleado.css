@@ -1,0 +1,210 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+    background-color: #002c5f;
+    color: white;
+    text-align: center;
+    padding: 3px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header h2 {
+    margin: 0;
+    padding-left: 0px;
+    font-size: 20px;
+}
+
+.user {
+    background-color: #001731;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.user-info span {
+    margin-right: 15px;
+}
+
+.user-info a {
+    color: white;
+    text-decoration: none;
+    background-color: #0056b3;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.user-info img {
+    width: 24px;
+    height: 24px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    height: calc(100vh - 60px); /* Ajuste para el espacio superior */
+    margin-top: 60px; /* Altura de la barra azul */
+    flex-wrap: wrap;
+}
+
+
+.card img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para el botón Volver */
+.user-info button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    align-items: center;
+}
+
+
+
+.main-container {
+    margin-top: 70px; /* Asegura que no quede detrás de la barra superior */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 300;
+}
+
+form {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group select,
+.form-group input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Cambia los bordes a menos cuadrados */
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%; /* Asegura que todos los campos tengan la misma medida */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus,
+input[type="date"]:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+    border-radius: 10px;
+}
+
+button[type="button"],
+button[type="submit"] {
+    background-color: #0056b3;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px; /* Cambia los bordes a menos cuadrados */
+    padding: 12px 20px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin-top: 10px;
+    align-self: center;
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+    background-color: #003f7f;
+}
+
+/* Estilo para el calendario */
+input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: Arial, sans-serif;
+    border-radius: 10px; /* Cambia los bordes a menos cuadrados */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.5);
+}
+
+/* Ajustes de accesibilidad */
+form input[type="text"],
+form input[type="file"],
+form select,
+form input[type="date"],
+form button {
+    font-size: 1em;
+    width: 100%; /* Asegura que todos los campos tengan la misma medida */
+}
+
+form input::placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+/* Mejorar espaciado en dispositivos móviles */
+@media (max-width: 600px) {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group select,
+    .form-group input[type="date"],
+    button[type="button"],
+    button[type="submit"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

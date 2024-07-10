@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Empleado para Actualizar</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'prointimopersonas/styles/buscar_empleado_para_actualizar.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        function goToPaginaprincipal() {
+            window.location.href = "{% url 'paginaprincipal' %}";
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h2>PROINTIMO PERSONAS</h2>
+        <div class="user-info">
+            <span class="user">{{ user.username }}</span>
+            <button type="button" onclick="goToPaginaprincipal()" style="background: none; border: none; color: white; cursor: pointer; padding: 0 10px;">
+                <img src="https://img.icons8.com/?size=100&id=IpDjq3VGsBFr&format=png&color=ffffff" alt="volver" style="width: 28px; height: 28px;">
+            </button>
+        </div>
+    </div>
+    <div class="main-container">
+        <h1>Consulte el Empleado para Actualizar</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="codigo_empleado">Código del Empleado:</label>
+                <input type="text" name="codigo_empleado" id="codigo_empleado" required>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <!-- Mostrar mensajes -->
+    {% if no_registro %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            toastr.error('El Usuario ingresado no existe.');
+        });
+    </script>
+    {% endif %}
+</body>
+</html>
